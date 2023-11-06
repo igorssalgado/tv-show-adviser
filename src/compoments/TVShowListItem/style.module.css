@@ -13,8 +13,18 @@
     background-color: rgba(0, 0, 0, 0.8);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+
 }
 
 .img {
     border-radius: 10px;
+    opacity: 0.6;
+}
+
+.caixinha{
+    opacity: 0.8;
+}
+
+.caixinha:hover{
+    opacity: 1;
 }

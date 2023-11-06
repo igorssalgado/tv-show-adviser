@@ -23,7 +23,7 @@ export const FAKE_RECOMMENDATIONS = [
   },
   {
     "adult": false,
-    "backdrop_path": "/mzlZAMjE2yk2sW3f9HTeBM3B3jw.jpg",
+    "backdrop_path": null,
     "id": 616747,
     "title": "Haunted Mansion",
     "original_language": "en",

@@ -6,18 +6,18 @@ import { BASE_URL, API_KEY_PARAM } from "../config"
 
 export class TVShowAPI {
     static async fetchPopulars() {
-        // const reponse = await axios.get(`${BASE_URL}movie/popular${API_KEY_PARAM}`);
-        // console.log(reponse.data.results)
-        // return reponse.data.results;
+        const reponse = await axios.get(`${BASE_URL}movie/popular${API_KEY_PARAM}`);
+        console.log(reponse.data.results)
+        return reponse.data.results;
         
-        return FAKE_POPULARS;
+        // return FAKE_POPULARS;
     }
 
     static async fetchRecomendations(tvShowId) {
-        // const reponse = await axios.get(`${BASE_URL}movie/${tvShowId}/recommendations${API_KEY_PARAM}`);
-        // return reponse.data.results;
+        const reponse = await axios.get(`${BASE_URL}movie/${tvShowId}/recommendations${API_KEY_PARAM}`);
+        return reponse.data.results;
 
-        return FAKE_RECOMMENDATIONS;
+        // return FAKE_RECOMMENDATIONS;
     }
 
     static async fetchByTitle(title) {

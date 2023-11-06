@@ -9,6 +9,8 @@ import logoImg from "./assets/images/logo.png"
 import { TVShowList } from "./compoments/TVShowList/TVShowList";
 import { SearchBar } from "./compoments/SearchBar/SearchBar";
 
+import image from "./assets/images/imagenull.jpg";
+
 
 export function App() {
 
@@ -51,10 +53,20 @@ export function App() {
     setCurrentTVShow(tvShow);
   }
 
+  function backgroudImage(currentTVShow) {
+
+    if (currentTVShow.backdrop_path === null) {
+      return image;
+    } else {
+      return `${BACKDROP_BASE_URL}${currentTVShow.backdrop_path}`;
+    }
+
+  }
+
   return (
     <div className={s.main_container}
       style={{
-        background: currentTVShow ? `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("${BACKDROP_BASE_URL}${currentTVShow.backdrop_path}") no-repeat center / cover` : "black",
+        background: currentTVShow ? `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("${backgroudImage(currentTVShow)}") no-repeat center / cover` : "black",
       }}>
       <div className={s.header}>
         <div className="row">
