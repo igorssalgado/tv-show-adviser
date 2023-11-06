@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { FAKE_POPULARS, FAKE_RECOMMENDATIONS } from "./fake_data"
 
-import { BASE_URL, API_KEY_PARAM, BACKDROP_BASE_URL } from "../config"
+import { BASE_URL, API_KEY_PARAM } from "../config"
 
 export class TVShowAPI {
     static async fetchPopulars() {
@@ -18,6 +18,11 @@ export class TVShowAPI {
         // return reponse.data.results;
 
         return FAKE_RECOMMENDATIONS;
+    }
+
+    static async fetchByTitle(title) {
+        const reponse = await axios.get(`${BASE_URL}search/movie${API_KEY_PARAM}&query=${title}`);
+        return reponse.data.results;
     }
 
 }

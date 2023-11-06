@@ -6,8 +6,8 @@ import { BACKDROP_BASE_URL } from "./config"
 import { TVShowDetail } from "./compoments/TVShowDetail/TVShowDetail";
 import { Logo } from "./compoments/Logo/Logo";
 import logoImg from "./assets/images/logo.png"
-import { TVShowListItem } from "./compoments/TVShowListItem/TVShowListItem";
 import { TVShowList } from "./compoments/TVShowList/TVShowList";
+import { SearchBar } from "./compoments/SearchBar/SearchBar";
 
 
 export function App() {
@@ -30,6 +30,13 @@ export function App() {
     }
   }
 
+  async function fetchByTitle(title) {
+    const searchResponse = await TVShowAPI.fetchByTitle(title);
+    if (searchResponse.length > 0) {
+      setCurrentTVShow(searchResponse[0]);
+    }
+  }
+
   useEffect(() => {
     fetchPopulars();
   }, [])
@@ -40,7 +47,9 @@ export function App() {
     }
   }, [currentTVShow])
 
-  console.log(recommendationList)
+  function updateCurrentTVShow(tvShow) {
+    setCurrentTVShow(tvShow);
+  }
 
   return (
     <div className={s.main_container}
@@ -50,11 +59,10 @@ export function App() {
       <div className={s.header}>
         <div className="row">
           <div className="col-4">
-            <div><Logo img={logoImg} title={"Watowatch"} subtitle={"Find a show you may like"} /></div>
-            <div>subtitle</div>
+            <div><Logo img={logoImg} title={"Watowatch"} subtitle={"Find a movie you may like"} /></div>
           </div>
           <div className="col-md-12 col-lg-4">
-            <input style={{ width: "100%" }} type="text"></input>
+            <SearchBar onSubmit={fetchByTitle} />
           </div>
         </div>
       </div>
@@ -62,7 +70,7 @@ export function App() {
         {currentTVShow && <TVShowDetail tvShow={currentTVShow} />}
       </div>
       <div className={s.recommended_shows}>
-        {currentTVShow && <TVShowList tvShowList={recommendationList}/>}
+        {currentTVShow && <TVShowList onCLickItem={updateCurrentTVShow} tvShowList={recommendationList} />}
       </div>
     </div>
   );
