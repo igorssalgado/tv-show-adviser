@@ -10,42 +10,59 @@ import { TVShowList } from "./compoments/TVShowList/TVShowList";
 import { SearchBar } from "./compoments/SearchBar/SearchBar";
 
 import image from "./assets/images/imagenull.jpg";
+import { MovieOrTVShow } from "./compoments/MovieOrTVShow/MovieOrTVShow";
 
 
 export function App() {
 
   const [currentTVShow, setCurrentTVShow] = useState();
+  const [movieSearch, setmovieSearch] = useState();
   const [recommendationList, setRecommendationList] = useState([]);
 
-  async function fetchPopulars() {
-    const popularTVShowList = await TVShowAPI.fetchPopulars();
+  function fetchMovieSearch() {
+    if (movieSearch) {
+      setmovieSearch(false);
+    } else {
+      setmovieSearch(true);
+    }
+  }
+
+  async function fetchMoviePopulars() {
+    const popularTVShowList = await TVShowAPI.fetchMoviePopulars();
     const randomNum = Math.round(Math.random() * 19)
     if (popularTVShowList.length > 0) {
       setCurrentTVShow(popularTVShowList[randomNum]);
     }
   }
 
-  async function fetchRecomendations(tvShowId) {
-    const recommendationListResp = await TVShowAPI.fetchRecomendations(tvShowId);
+  async function fetchMovieRecomendations(tvShowId) {
+    const recommendationListResp = await TVShowAPI.fetchMovieRecomendations(tvShowId);
     if (recommendationListResp.length > 0) {
       setRecommendationList(recommendationListResp.slice(0, 10));
     }
   }
 
-  async function fetchByTitle(title) {
-    const searchResponse = await TVShowAPI.fetchByTitle(title);
+  async function fetchTVShowByTitle(title) {
+    const searchResponse = await TVShowAPI.fetchTVShowByTitle(title);
+    if (searchResponse.length > 0) {
+      setCurrentTVShow(searchResponse[0]);
+    }
+  }
+
+  async function fetchMovieByTitle(title) {
+    const searchResponse = await TVShowAPI.fetchMovieByTitle(title);
     if (searchResponse.length > 0) {
       setCurrentTVShow(searchResponse[0]);
     }
   }
 
   useEffect(() => {
-    fetchPopulars();
-  }, [])
+    fetchMoviePopulars();
+  }, [movieSearch])
 
   useEffect(() => {
     if (currentTVShow) {
-      fetchRecomendations(currentTVShow.id);
+      fetchMovieRecomendations(currentTVShow.id);
     }
   }, [currentTVShow])
 
@@ -60,10 +77,10 @@ export function App() {
     } else {
       return `${BACKDROP_BASE_URL}${currentTVShow.backdrop_path}`;
     }
-
   }
 
   return (
+
     <div className={s.main_container}
       style={{
         background: currentTVShow ? `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("${backgroudImage(currentTVShow)}") no-repeat center / cover` : "black",
@@ -74,7 +91,8 @@ export function App() {
             <div><Logo img={logoImg} title={"Watowatch"} subtitle={"Find a movie you may like"} /></div>
           </div>
           <div className="col-md-12 col-lg-4">
-            <SearchBar onSubmit={fetchByTitle} />
+            {movieSearch ? <SearchBar value="" type={"MOVIE"} onSubmit={fetchMovieByTitle} /> : <SearchBar value="" type={"TV SHOW"} onSubmit={fetchTVShowByTitle} />}
+            {movieSearch ? <MovieOrTVShow type={"TV SHOW"} fetchMovieSearch={fetchMovieSearch} /> : <MovieOrTVShow type={"MOVIE"} fetchMovieSearch={fetchMovieSearch} />}
           </div>
         </div>
       </div>

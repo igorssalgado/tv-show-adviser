@@ -1,11 +1,16 @@
 import s from "./style.module.css"
 import { Search as SearchIcon } from "react-bootstrap-icons"
 
-export function SearchBar({ onSubmit }) {
+export function SearchBar({ onSubmit, type, value }) {
+
     function submit(e) {
         if (e.key === "Enter" && e.target.value.trim() !== "") {
             onSubmit(e.target.value);
         }
+    }
+
+    function clear(e){
+        e.target.value = "";
     }
 
     return <>
@@ -14,6 +19,7 @@ export function SearchBar({ onSubmit }) {
             onKeyUp={submit}
             className={s.input}
             type="text"
-            placeholder={"Search a movie you may like"} />
+            onFocus={e => clear(e)}
+            placeholder={`Search a ${type} you may like`} />
     </>;
 }
