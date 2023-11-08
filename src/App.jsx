@@ -39,16 +39,16 @@ export function App() {
   }
 
   async function fetchRecomendations(tvShowId, type) {
-        const recommendationListResp = await TVShowAPI.fetchRecomendations(tvShowId, type);
+    const recommendationListResp = await TVShowAPI.fetchRecomendations(tvShowId, type);
     if (recommendationListResp.length > 0) {
       setRecommendationList(recommendationListResp.slice(0, 10));
     }
   }
 
   async function fetchByTitle(title, type) {
-    
-    movieSearch? type="movie":type="tv"
-    
+
+    movieSearch ? type = "movie" : type = "tv"
+
     const searchResponse = await TVShowAPI.fetchByTitle(title, type);
     if (searchResponse.length > 0) {
       setCurrentTVShow(searchResponse[0]);
@@ -57,13 +57,13 @@ export function App() {
 
   useEffect(() => {
     fetchPopulars(type);
-  }, [movieSearch])
+  }, [movieSearch, type])
 
   useEffect(() => {
     if (currentTVShow) {
       fetchRecomendations(currentTVShow.id, type);
     }
-  }, [currentTVShow])
+  }, [currentTVShow, type])
 
   function updateCurrentTVShow(tvShow) {
     setCurrentTVShow(tvShow);
@@ -88,7 +88,7 @@ export function App() {
       <div className={s.header}>
         <div className="row">
           <div className="col-4">
-            <div>{movieSearch ? <Logo img={logoImg} title={"Watowatch"} subtitle={`Find a movie you may like`} /> : <Logo img={logoImg} title={"Watowatch"} subtitle={`Find a serie you may like`} /> }</div>
+            <div>{movieSearch ? <Logo img={logoImg} title={"Watowatch"} subtitle={`Find a movie you may like`} /> : <Logo img={logoImg} title={"Watowatch"} subtitle={`Find a serie you may like`} />}</div>
           </div>
           <div className="col-md-12 col-lg-4">
             {movieSearch ? <SearchBar value="" type={"movie"} onSubmit={fetchByTitle} /> : <SearchBar value="" type={"tv"} onSubmit={fetchByTitle} />}
