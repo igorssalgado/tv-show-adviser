@@ -4,7 +4,7 @@ export function MovieOrTVShow({fetchMovieSearch,type}) {
 
     return (
         <>
-            <button onClick={fetchMovieSearch}>{type}</button>
+            <div className={s.button}><span onClick={fetchMovieSearch}>Switch to {type}s</span></div>
         </>
     )
 }

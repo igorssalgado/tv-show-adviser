@@ -88,11 +88,11 @@ export function App() {
       <div className={s.header}>
         <div className="row">
           <div className="col-4">
-            <div>{movieSearch ? <Logo img={logoImg} title={"Watowatch"} subtitle={`Find a movie you may like`} /> : <Logo img={logoImg} title={"Watowatch"} subtitle={`Find a serie you may like`} />}</div>
+            <div>{movieSearch ? <Logo img={logoImg} title={"Watowatch"} subtitle={`Find a movie you may like`} /> : <Logo img={logoImg} title={"Watowatch"} subtitle={`Find a TV serie you may like`} />}</div>
           </div>
           <div className="col-md-12 col-lg-4">
-            {movieSearch ? <SearchBar value="" type={"movie"} onSubmit={fetchByTitle} /> : <SearchBar value="" type={"tv"} onSubmit={fetchByTitle} />}
-            {movieSearch ? <MovieOrTVShow type={"TV SHOW"} fetchMovieSearch={fetchMovieSearch} /> : <MovieOrTVShow type={"MOVIE"} fetchMovieSearch={fetchMovieSearch} />}
+            {movieSearch ? <SearchBar value="" type={"movie"} onSubmit={fetchByTitle} /> : <SearchBar value="" type={"TV Serie"} onSubmit={fetchByTitle} />}
+            {movieSearch ? <MovieOrTVShow type={"TV Serie"} fetchMovieSearch={fetchMovieSearch} /> : <MovieOrTVShow type={"MOVIE"} fetchMovieSearch={fetchMovieSearch} />}
           </div>
         </div>
       </div>
