@@ -1,3 +1,24 @@
+export const FAKE_SEARCH = [{
+    "adult": false,
+    "backdrop_path": "/ctMserH8g2SeOAnCw5gFjdQF8mo.jpg",
+    "genre_ids": [
+        35,
+        12,
+        14
+    ],
+    "id": 346698,
+    "original_language": "en",
+    "original_title": "Barbie",
+    "overview": "Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.",
+    "popularity": 557.947,
+    "poster_path": "/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg",
+    "release_date": "2023-07-19",
+    "title": "Barbie",
+    "video": false,
+    "vote_average": 7.215,
+    "vote_count": 5752
+}]
+
 export const FAKE_RECOMMENDATIONS = [
   {
     "adult": false,

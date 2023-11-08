@@ -17,52 +17,51 @@ export function App() {
 
   const [currentTVShow, setCurrentTVShow] = useState();
   const [movieSearch, setmovieSearch] = useState();
+  const [type, setType] = useState();
   const [recommendationList, setRecommendationList] = useState([]);
 
   function fetchMovieSearch() {
     if (movieSearch) {
       setmovieSearch(false);
+      setType("tv")
     } else {
       setmovieSearch(true);
+      setType("movie")
     }
   }
 
-  async function fetchMoviePopulars() {
-    const popularTVShowList = await TVShowAPI.fetchMoviePopulars();
+  async function fetchPopulars(type) {
+    const popularTVShowList = await TVShowAPI.fetchPopulars(type);
     const randomNum = Math.round(Math.random() * 19)
     if (popularTVShowList.length > 0) {
       setCurrentTVShow(popularTVShowList[randomNum]);
     }
   }
 
-  async function fetchMovieRecomendations(tvShowId) {
-    const recommendationListResp = await TVShowAPI.fetchMovieRecomendations(tvShowId);
+  async function fetchRecomendations(tvShowId, type) {
+        const recommendationListResp = await TVShowAPI.fetchRecomendations(tvShowId, type);
     if (recommendationListResp.length > 0) {
       setRecommendationList(recommendationListResp.slice(0, 10));
     }
   }
 
-  async function fetchTVShowByTitle(title) {
-    const searchResponse = await TVShowAPI.fetchTVShowByTitle(title);
-    if (searchResponse.length > 0) {
-      setCurrentTVShow(searchResponse[0]);
-    }
-  }
-
-  async function fetchMovieByTitle(title) {
-    const searchResponse = await TVShowAPI.fetchMovieByTitle(title);
+  async function fetchByTitle(title, type) {
+    
+    movieSearch? type="movie":type="tv"
+    
+    const searchResponse = await TVShowAPI.fetchByTitle(title, type);
     if (searchResponse.length > 0) {
       setCurrentTVShow(searchResponse[0]);
     }
   }
 
   useEffect(() => {
-    fetchMoviePopulars();
+    fetchPopulars(type);
   }, [movieSearch])
 
   useEffect(() => {
     if (currentTVShow) {
-      fetchMovieRecomendations(currentTVShow.id);
+      fetchRecomendations(currentTVShow.id, type);
     }
   }, [currentTVShow])
 
@@ -79,6 +78,7 @@ export function App() {
     }
   }
 
+
   return (
 
     <div className={s.main_container}
@@ -88,10 +88,10 @@ export function App() {
       <div className={s.header}>
         <div className="row">
           <div className="col-4">
-            <div><Logo img={logoImg} title={"Watowatch"} subtitle={"Find a movie you may like"} /></div>
+            <div>{movieSearch ? <Logo img={logoImg} title={"Watowatch"} subtitle={`Find a movie you may like`} /> : <Logo img={logoImg} title={"Watowatch"} subtitle={`Find a serie you may like`} /> }</div>
           </div>
           <div className="col-md-12 col-lg-4">
-            {movieSearch ? <SearchBar value="" type={"MOVIE"} onSubmit={fetchMovieByTitle} /> : <SearchBar value="" type={"TV SHOW"} onSubmit={fetchTVShowByTitle} />}
+            {movieSearch ? <SearchBar value="" type={"movie"} onSubmit={fetchByTitle} /> : <SearchBar value="" type={"tv"} onSubmit={fetchByTitle} />}
             {movieSearch ? <MovieOrTVShow type={"TV SHOW"} fetchMovieSearch={fetchMovieSearch} /> : <MovieOrTVShow type={"MOVIE"} fetchMovieSearch={fetchMovieSearch} />}
           </div>
         </div>
